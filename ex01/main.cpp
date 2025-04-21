@@ -2,7 +2,7 @@
 #include "iter.hpp"
 
 template <typename T>
-void print(const T& value) {
+void print(T& value) {
     std::cout << value << " ";
 }
 
