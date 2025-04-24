@@ -2,73 +2,68 @@
 #define ARRAY_HPP
 
 #include <iostream>
-#include <stdexcept>
-#include <sstream>
+#include <exception>
 
 template <typename T>
-class Array {
-private:
-    T* array;
-    unsigned int _size;
 
-public:
-    Array() : array(NULL), _size(0) {}
+class Array
+{
+    private:
+        T *_array;
+        unsigned int _size;
 
-    Array(unsigned int n) : _size(n) {
-        array = new T[_size];
-        for (unsigned int i = 0; i < _size; i++) {
-            array[i] = T();
-        }
-    }
+    public:
+        Array() : _array(NULL), _size(0){}
 
-    Array(const Array& other) : _size(other._size) {
-        array = new T[_size];
-        for (unsigned int i = 0; i < _size; i++) {
-            array[i] = other.array[i];
-        }
-    }
+        Array(unsigned int n) : _array(new T[n]()), _size(n){}
 
-    Array& operator=(const Array& other) {
-        if (this == &other) {
-            return *this;
+        Array(const Array &copy){
+
+            _size = copy._size;
+            _array = new T[copy._size];
+            for (unsigned int i = 0; i < _size; i++)
+                _array[i] = copy._array[i];
         }
 
-        delete[] array;
+        Array& operator=(const Array& copy){
 
-        _size = other._size;
-        array = new T[_size];
-        for (unsigned int i = 0; i < _size; i++) {
-            array[i] = other.array[i];
+            if (this != &copy){
+
+                delete[] _array;
+
+                _size = copy._size;
+                _array = new T[_size];
+
+                for(unsigned int i = 0; i < _size; i++)
+                    _array[i] = copy._array[i];
+            }
+            return(*this);
         }
 
-        return *this;
-    }
+        ~Array(){
 
-    ~Array() {
-        delete[] array;
-    }
-
-    T& operator[](unsigned int index) {
-        if (index >= _size) {
-            std::stringstream msg;
-            msg << "Index " << index << " is out of bounds!";
-            throw std::out_of_range(msg.str());
+            delete[] _array;
+            _array = NULL;
         }
-        return array[index];
-    }
 
-    const T& operator[](unsigned int index) const {
-        if (index >= _size) {
-            std::stringstream msg;
-            msg << "Index " << index << " is out of bounds!";
-            throw std::out_of_range(msg.str());
+
+        T& operator[](unsigned int index){
+
+            if (index >=_size)
+                throw std::out_of_range("Index out of bounds");
+            return (_array[index]);
         }
-        return array[index];
+
+        const T& operator[](unsigned int index) const {
+        if (index >= _size)
+            throw std::out_of_range("Index out of bounds");
+        return _array[index];
     }
 
-    unsigned int size() const {
-        return _size;
-    }
+
+        unsigned int size() const {
+            return (_size);
+        }
 };
 
 #endif
