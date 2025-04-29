@@ -5,6 +5,8 @@ NAME = array
 SRC = main.cpp
 OBJ = $(SRC:.cpp=.o)
 
+all: $(NAME)
+
 $(NAME): $(OBJ)
 	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJ)
 

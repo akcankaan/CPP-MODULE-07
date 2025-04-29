@@ -5,6 +5,8 @@ NAME = whatever
 SRC = main.cpp
 OBJ = $(SRC:.cpp=.o)
 
+all: $(NAME)
+
 $(NAME): $(OBJ)
 	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJ)
 
@@ -18,5 +20,7 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean $(NAME)
+
+all: $(NAME)
 
 .PHONY: clean fclean re

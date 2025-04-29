@@ -2,10 +2,15 @@
 #define ITER_HPP
 
 template <typename T>
-void iter(T* array, size_t length, void (*func)(T&)) {
-    for (size_t i = 0; i < length; i++) {
-        func(array[i]);
+void iter(T *adress, size_t length, void(*f)(T const &)){
+    for(size_t i = 0; i < length; i++){
+        f(adress[i]);
     }
+}
+
+template <typename T>
+void print(T const & element){
+    std::cout << element << std::endl;
 }
 
 #endif
